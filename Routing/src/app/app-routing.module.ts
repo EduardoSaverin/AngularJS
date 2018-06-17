@@ -8,15 +8,17 @@ import { NotFoundComponent } from "./not-found/not-found.component";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { AuthguardService } from "./authguard.service";
+import { CandeactivateService } from "./candeactivate.service";
 
 const appRoutes = [
     {path: '' , component:HomeComponent},
     {path: 'users', component:UsersComponent,children:[
       {path: ':id/:name', component:UserComponent}
     ]},
-    {path: 'servers',/*canActivate:[AuthguardService]*/canActivateChild:[AuthguardService] ,component:ServersComponent,children:[
+    {path: 'servers',/*canActivate:[AuthguardService]*/canActivateChild:[AuthguardService] ,component:ServersComponent,
+    children:[
       {path: ':id',component:ServerComponent},
-      {path: ':id/edit',component:EditServerComponent}
+      {path: ':id/edit',canDeactivate:[CandeactivateService],component:EditServerComponent}
     ]},
     {path:'something',component:NotFoundComponent},
     // {path:'not-found',redirectTo:'something'}
